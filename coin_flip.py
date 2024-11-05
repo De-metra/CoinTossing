@@ -16,6 +16,10 @@ class CoinSimulator:
         self.canvas = tk.Canvas(root, width=300, height=300, bg="white")
         self.canvas.pack()
 
+        # Метка для отображения результата
+        self.result_label = tk.Label(root, text="", font=("Helvetica", 16))
+        self.result_label.pack()
+
         # Кнопка для подбрасывания монеты
         self.flip_button = tk.Button(root, text="Подбросить монету", command=self.start_flip)
         self.flip_button.pack()
@@ -27,7 +31,8 @@ class CoinSimulator:
         self.animation_index = 0
 
     def start_flip(self):
-        # Блокировка кнопки на время анимации
+        # Очистка метки результата и отключение кнопки на время анимации
+        self.result_label.config(text="")
         self.flip_button.config(state="disabled")
         
         # Запуск анимации вращения
@@ -46,8 +51,11 @@ class CoinSimulator:
             final_result = random.choice(["Орел", "Решка"])
             if final_result == "Орел":
                 self.canvas.itemconfig(self.coin_image, image=self.orel_image)
+                self.result_label.config(text="Результат: Орел")
             else:
                 self.canvas.itemconfig(self.coin_image, image=self.reshka_image)
+                self.result_label.config(text="Результат: Решка")
+
             # Доступность кнопки после завершения анимации
             self.flip_button.config(state="normal")
 
